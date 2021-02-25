@@ -16,10 +16,7 @@ target/
 ### IntelliJ IDEA ###
 .idea
 .mvn
-springboot2mybatis.impl
 HELP.md
-mnvw
-mnvw.cmd
 *.iws
 *.iml
 *.ipr

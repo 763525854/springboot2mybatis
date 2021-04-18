@@ -5,20 +5,22 @@ import com.rhyme.fsbp.myinterface.Apidempotent;
 import com.rhyme.fsbp.service.MyService;
 import com.rhyme.fsbp.service.TokenService;
 import com.rhyme.fsbp.service.UserService;
-import org.redisson.api.RLock;
+import io.swagger.annotations.*;
+import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
+@Api(tags = "Hello控制类")
 @RestController
 public class HelloController {
     private static Logger logger = LoggerFactory.getLogger(HelloController.class);
@@ -36,12 +38,16 @@ public class HelloController {
     @Autowired
     MyService myService;
 
-    @RequestMapping("/myservice")
-    public void myservice() {
+    @ApiOperation("多种实现的注入选择")
+    @GetMapping("/myservice")
+    @ApiImplicitParams ({@ApiImplicitParam(name="params",required = true)})
+    public void myservice(@ApiParam("入参参数")  String params) {
+        logger.info("入参params：{}", params);
         myService.sayHello();
     }
 
-    @RequestMapping("/hello")
+
+    @GetMapping("/hello")
     public String hello() {
         User user = new User();
         user.setId(8L);
@@ -60,7 +66,7 @@ public class HelloController {
         return "hello world";
     }
 
-    @RequestMapping("/lock")
+    @GetMapping("/lock")
     public String lock() {
         Long counter = redisTemplate.opsForValue().increment("COUNTER", 1);
         System.out.println("haha " + counter);
@@ -76,7 +82,7 @@ public class HelloController {
         return "lock-" + counter;
     }
 
-    @RequestMapping("/rhyme")
+    @GetMapping("/rhyme")
     public String rhyme() {
         if (redisTemplate.opsForValue().get("rhyme") != null)
             return "hello world";
@@ -84,17 +90,17 @@ public class HelloController {
         return "hello world";
     }
 
-    @RequestMapping("/bit")
+    @GetMapping("/bit")
     public void bit() {
         redisTemplate.opsForValue().getBit("mybit", 0);
     }
 
-    @RequestMapping("/hyperLogLog")
+    @GetMapping("/hyperLogLog")
     public void hyperLogLog() {
         redisTemplate.opsForHyperLogLog().add("myHyperLogLog", "a");
     }
 
-    @RequestMapping("/mytoken")
+    @GetMapping("/mytoken")
     @Apidempotent
     public List<User> mytoken(HttpServletRequest request) {
         return userService.findAll();

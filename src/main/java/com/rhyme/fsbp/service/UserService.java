@@ -7,4 +7,5 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
     List<User> selectAll();
+    User findOne(Long id);
 }

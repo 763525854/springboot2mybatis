@@ -16,7 +16,8 @@ public class UserController {
 
     @RequestMapping("/findAll")
     public List<User> findAll(){
-        return userService.findAll();
+       // return userService.findAll();
+        return userService.selectAll();
     }
 
 }

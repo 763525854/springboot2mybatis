@@ -21,6 +21,7 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public void checkToken(String token) {
+        System.out.println("执行了checkToken");
         token = redisTemplate.opsForValue().get(token);
         if (token == null || token.equals("")) {
             throw new RuntimeException("业务已经处理过了属于重复提交");

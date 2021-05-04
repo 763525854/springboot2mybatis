@@ -11,6 +11,7 @@ public class TestReceiver3 {
         while (true){
            Thread.sleep(3000);
             System.out.println("睡得好舒服");
+            break;
         }
     }
 }

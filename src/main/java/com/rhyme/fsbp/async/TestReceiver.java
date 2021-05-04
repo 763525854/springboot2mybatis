@@ -60,4 +60,18 @@ public class TestReceiver {
         }
         return new AsyncResult<String>("真棒");
     }
+
+    @Async
+    public void helloNoCallBack() throws InterruptedException {
+        System.out.println("helloNoCallBack");
+        Thread.sleep(5000);
+        Random random = new Random();
+        int r = random.nextInt(10);
+        if (r < 5) {
+            throw new RuntimeException("我太小了helloNoCallBack，我出bug了");
+        } else {
+            System.out.println("helloNoCallBack，成功执行");
+            //do nothing
+        }
+    }
 }

@@ -120,4 +120,16 @@ public class AsyncController {
         long end = System.currentTimeMillis();
         logger.info("task is use {}", end - start);
     }
+
+    /**
+     * 增加对异步调用成功失败的处理，用于处理没有返回值的异步调用
+     * @throws Exception
+     */
+    @RequestMapping(value = "/dotask6", method = RequestMethod.GET)
+    public void dotaskNocallback() throws Exception {
+        long start = System.currentTimeMillis();
+        testReceiver.helloNoCallBack();
+        long end = System.currentTimeMillis();
+        logger.info("dotask6 is use {}", end - start);
+    }
 }

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 @Api(tags = "Hello控制类")
 @RestController
+//@CrossOrigin
 public class HelloController {
     private static Logger logger = LoggerFactory.getLogger(HelloController.class);
     @Autowired

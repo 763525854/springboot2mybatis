@@ -27,4 +27,12 @@ public class TestReceiver {
         }
         return new AsyncResult<String>("i am testreceiver i have done");
     }
+
+    @Async("threadPoolTaskExecutor1")
+    public Future<String> helloFutureWithPool() {
+        for (int i=0;i<100;i++){
+            System.out.println("i am hello1 ###"+i);
+        }
+        return new AsyncResult<String>("i am testreceiver i use threadpool i have done");
+    }
 }

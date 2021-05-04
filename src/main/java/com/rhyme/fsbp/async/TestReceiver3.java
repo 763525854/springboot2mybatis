@@ -27,4 +27,14 @@ public class TestReceiver3 {
         }
         return new AsyncResult<String>("i am testreceiver3 i have done");
     }
+
+    @Async("threadPoolTaskExecutor2")
+    public Future<String> helloFutureWithPool() throws InterruptedException {
+        while (true){
+            Thread.sleep(3000);
+            System.out.println("睡得好舒服3");
+            break;
+        }
+        return new AsyncResult<String>("i am testreceiver3 i use threadpool i have done");
+    }
 }

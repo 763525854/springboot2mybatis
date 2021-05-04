@@ -1,10 +1,9 @@
 package com.rhyme.fsbp.controller;
 
-import com.rhyme.fsbp.async.TestReceiver;
-import com.rhyme.fsbp.async.TestReceiver2;
-import com.rhyme.fsbp.async.TestReceiver3;
+import com.rhyme.fsbp.async.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -104,6 +103,16 @@ public class AsyncController {
         System.out.println(s);
         s = taskResult3.get().toString();
         System.out.println(s);
+        long end = System.currentTimeMillis();
+        logger.info("task is use {}", end - start);
+    }
+
+    @RequestMapping(value = "/dotask5", method = RequestMethod.GET)
+    public void dotaskcallback() throws Exception {
+        long start = System.currentTimeMillis();
+        ListenableFuture<String> callback = testReceiver.helloCallBack();
+        callback.addCallback(new MySuccessCallback(), new MyFailCallback());
+//        System.out.println(callback.get().toString());
         long end = System.currentTimeMillis();
         logger.info("task is use {}", end - start);
     }

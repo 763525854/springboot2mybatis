@@ -107,12 +107,16 @@ public class AsyncController {
         logger.info("task is use {}", end - start);
     }
 
+    /**
+     * 增加对异步调用成功失败的处理，仅用于处理有返回值的异步调用
+     * @throws Exception
+     */
     @RequestMapping(value = "/dotask5", method = RequestMethod.GET)
     public void dotaskcallback() throws Exception {
         long start = System.currentTimeMillis();
         ListenableFuture<String> callback = testReceiver.helloCallBack();
         callback.addCallback(new MySuccessCallback(), new MyFailCallback());
-//        System.out.println(callback.get().toString());
+        //System.out.println(callback.get().toString());
         long end = System.currentTimeMillis();
         logger.info("task is use {}", end - start);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.Future;
 
 /**
  * @author rhyme
@@ -40,6 +41,26 @@ public class AsyncController {
         testReceiver.hello();
         testReceiver2.hello();
         testReceiver3.hello();
+        long end = System.currentTimeMillis();
+        logger.info("task is use {}", end - start);
+    }
+
+    /**
+     * 不带返回值的异步任务执行
+     *
+     * @throws InterruptedException
+     */
+    @RequestMapping(value = "/dotask2", method = RequestMethod.GET)
+    public void doTask2WithFuture() throws InterruptedException {
+        long start = System.currentTimeMillis();
+        Future<String> taskResult1 = testReceiver.helloFuture();
+        Future<String> taskResult2 = testReceiver2.helloFuture();
+        Future<String> taskResult3 = testReceiver3.helloFuture();
+        while (true) {
+            if (taskResult1.isDone() && taskResult2.isDone() && taskResult3.isDone()) {
+                break;
+            }
+        }
         long end = System.currentTimeMillis();
         logger.info("task is use {}", end - start);
     }

@@ -2,6 +2,8 @@ package com.rhyme.fsbp.shiro;
 
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
+import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,28 +21,25 @@ import java.util.Map;
 public class ShiroConfig {
     @Bean
     MyRealm myRealm() {
-        MyRealm myRealm=new MyRealm();
+        MyRealm myRealm = new MyRealm();
         return myRealm;
     }
 
     @Bean
-    SecurityManager securityManager(){
-        DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
+    DefaultWebSecurityManager securityManager() {
+        DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         manager.setRealm(myRealm());
         return manager;
     }
 
     @Bean
-    ShiroFilterFactoryBean shiroFilterFactoryBean(){
-        ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
-        bean.setSecurityManager(securityManager());
-        bean.setLoginUrl("/login");
-        bean.setSuccessUrl("/index");
-        bean.setUnauthorizedUrl("/unauthorizedurl");
-        Map<String,String> map=new LinkedHashMap<>();
-        map.put("/doLogin","anon");
-        map.put("/**","authc");
-        bean.setFilterChainDefinitionMap(map);
+    ShiroFilterChainDefinition ShiroFilterChainDefinition() {
+        DefaultShiroFilterChainDefinition bean = new DefaultShiroFilterChainDefinition();
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("/doLogin", "anon");
+        map.put("/**", "authc");
+        bean.addPathDefinition("/doLogin", "anon");
+        bean.addPathDefinition("/**", "authc");
         return bean;
     }
 }

@@ -12,11 +12,13 @@ import org.apache.shiro.subject.PrincipalCollection;
  * @date 2021/5/5 13:13
  */
 public class MyRealm extends AuthorizingRealm {
+    //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         return null;
     }
 
+    //认证
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String username = (String) authenticationToken.getPrincipal();

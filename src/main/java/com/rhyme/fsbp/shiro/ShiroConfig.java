@@ -35,9 +35,6 @@ public class ShiroConfig {
     @Bean
     ShiroFilterChainDefinition ShiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition bean = new DefaultShiroFilterChainDefinition();
-        Map<String, String> map = new LinkedHashMap<>();
-        map.put("/doLogin", "anon");
-        map.put("/**", "authc");
         bean.addPathDefinition("/doLogin", "anon");
         bean.addPathDefinition("/**", "authc");
         return bean;

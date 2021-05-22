@@ -1,6 +1,7 @@
 package com.rhyme.fsbp.util;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 
 /**
  * @author rhyme
@@ -49,5 +50,20 @@ public class MD5Utils {
      */
     public static final String encryptToHexWithSalt(String str, String salt) {
         return new Md5Hash(str, salt).toHex();
+    }
+
+    public static void main1(String[] args) {
+        String str=MD5Utils.encryptToString("nima2");
+        System.out.println(str);
+        String ok=new SimpleHash("MD5","nima2").toString();
+        System.out.println(ok);
+
+        ok=new SimpleHash("MD5","nima2").toHex();
+        System.out.println(ok);
+        ok=new Md5Hash("nima2").toString();
+        System.out.println(ok);
+
+        String str2=MD5Utils.encryptToHex("nima2");
+        System.out.println(str2);
     }
 }

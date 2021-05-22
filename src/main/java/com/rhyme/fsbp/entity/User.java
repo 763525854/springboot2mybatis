@@ -22,4 +22,5 @@ public class User implements Serializable {
     private String username;
     private String password;
     private String passwordSalt;
+    private Boolean locked = Boolean.FALSE;
 }

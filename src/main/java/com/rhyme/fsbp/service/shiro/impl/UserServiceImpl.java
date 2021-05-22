@@ -2,14 +2,12 @@ package com.rhyme.fsbp.service.shiro.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.rhyme.fsbp.entity.User;
 import com.rhyme.fsbp.mapper.UserMapper;
 import com.rhyme.fsbp.service.shiro.UserService;
 import com.rhyme.fsbp.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -82,10 +80,12 @@ public class UserServiceImpl implements UserService {
      * 根据用户名查找用户
      *
      * @param username
+     * @return
      */
     @Override
-    public void findByUsername(String username) {
-
+    public User findByUsername(String username) {
+        Wrapper<User> wrapper = new QueryWrapper<User>().eq("username", username);
+        return userMapper.selectOne(wrapper);
     }
 
     /**

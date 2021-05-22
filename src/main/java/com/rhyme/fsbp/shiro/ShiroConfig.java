@@ -1,5 +1,7 @@
 package com.rhyme.fsbp.shiro;
 
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.Md5CredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.spring.web.config.DefaultShiroFilterChainDefinition;
@@ -22,7 +24,8 @@ public class ShiroConfig {
     @Bean
     MyRealm myRealm() {
         MyRealm myRealm = new MyRealm();
-        myRealm.setCredentialsMatcher(null);
+        HashedCredentialsMatcher matcher=new HashedCredentialsMatcher("MD5");
+        myRealm.setCredentialsMatcher(matcher);
         return myRealm;
     }
 
@@ -37,7 +40,7 @@ public class ShiroConfig {
     ShiroFilterChainDefinition ShiroFilterChainDefinition() {
         DefaultShiroFilterChainDefinition bean = new DefaultShiroFilterChainDefinition();
         bean.addPathDefinition("/doLogin", "anon");
-        //bean.addPathDefinition("/**", "authc");
+        bean.addPathDefinition("/**", "authc");
         return bean;
     }
 }

@@ -47,8 +47,9 @@ public interface UserService {
      * 根据用户名查找用户
      *
      * @param username
+     * @return
      */
-    public void findByUsername(String username);
+    public User findByUsername(String username);
 
     /**
      * 根据用户名查找角色

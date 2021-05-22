@@ -1,10 +1,9 @@
 package com.rhyme.fsbp.timedtask;
 
-import com.rhyme.fsbp.model.User;
+import com.rhyme.fsbp.model.TbUser;
 import com.rhyme.fsbp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
@@ -35,10 +34,10 @@ public class Task1 {
 
     @Scheduled(cron = "0/5 * * * * *")
     public void crongetUser() {
-        List<User> users=userService.findAll();
-        for (int i=0;i<users.size();i++){
-            User user=users.get(i);
-            System.out.println("myname is "+user.getUsername()+", my password is "+user.getPassword());
+        List<TbUser> tbUsers =userService.findAll();
+        for (int i = 0; i< tbUsers.size(); i++){
+            TbUser tbUser = tbUsers.get(i);
+            System.out.println("myname is "+ tbUser.getUsername()+", my password is "+ tbUser.getPassword());
         }
     }
 }

@@ -7,6 +7,11 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Future;
 
@@ -14,6 +19,14 @@ import java.util.concurrent.Future;
 public class TestReceiver {
 
     private static final Logger log = LoggerFactory.getLogger(TestReceiver.class);
+
+    @Async
+    public void testException() {
+        System.out.println("i am exception");
+        HashMap hashMap=new HashMap();
+        hashMap.get("asdfsa").toString();
+        //throw new RuntimeException("haha");
+    }
 
     @Async
     public void hello() {

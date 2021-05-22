@@ -19,6 +19,10 @@ public class LoginController {
     @PostMapping("/doLogin")
     public void doLogin(String username,String password){
         Subject subject= SecurityUtils.getSubject();
+        subject.isAuthenticated();
+        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+        token.setRememberMe(true);
+        subject.login(token);
         try {
             subject.login(new UsernamePasswordToken(username,password));
             System.out.println("登录成功");

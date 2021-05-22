@@ -12,12 +12,14 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @MapperScan("com.rhyme.fsbp.mapper")
 @EnableAsync
 @EnableScheduling
 @EnableCaching
+@EnableTransactionManagement
 public class FsbpApplication {
 
     public static void main(String[] args) throws InterruptedException {

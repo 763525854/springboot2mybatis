@@ -1,19 +1,17 @@
 package com.rhyme.fsbp.controller;
 
-import com.rhyme.fsbp.model.User;
+import com.rhyme.fsbp.model.TbUser;
 import com.rhyme.fsbp.myinterface.Apidempotent;
 import com.rhyme.fsbp.service.MyService;
 import com.rhyme.fsbp.service.TokenService;
 import com.rhyme.fsbp.service.UserService;
 import io.swagger.annotations.*;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,15 +49,15 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
-        User user = new User();
-        user.setId(8L);
-        user.setUsername("haha");
-        user.setPassword("nihaoa");
+        TbUser tbUser = new TbUser();
+        tbUser.setId(8L);
+        tbUser.setUsername("haha");
+        tbUser.setPassword("nihaoa");
         ArrayList arrayList = new ArrayList();
-        arrayList.add(user);
-        arrayList.add(user);
-        arrayList.add(user);
-        arrayList.add(user);
+        arrayList.add(tbUser);
+        arrayList.add(tbUser);
+        arrayList.add(tbUser);
+        arrayList.add(tbUser);
         String ok = "user";
         redisTemplate2.opsForValue().set(ok.toString(), arrayList);
         ArrayList arrayList2 = (ArrayList) redisTemplate2.opsForValue().get("user");
@@ -104,7 +102,7 @@ public class HelloController {
 
     @GetMapping("/mytoken")
     @Apidempotent
-    public List<User> mytoken(HttpServletRequest request) {
+    public List<TbUser> mytoken(HttpServletRequest request) {
         return userService.findAll();
     }
 

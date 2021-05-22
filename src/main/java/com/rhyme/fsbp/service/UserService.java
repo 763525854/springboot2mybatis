@@ -1,11 +1,12 @@
 package com.rhyme.fsbp.service;
 
-import com.rhyme.fsbp.model.User;
+import com.rhyme.fsbp.model.TbUser;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> findAll();
-    List<User> selectAll();
-    User findOne(Long id);
+    List<TbUser> findAll();
+    List<TbUser> selectAll();
+    TbUser findOne(Long id);
+    int insert(String enable);
 }

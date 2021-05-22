@@ -34,6 +34,8 @@ public class UnifiedException {
             return ResultEntity.fail("请求参数不对");
         }else if (e instanceof SQLException){
             return ResultEntity.fail("数据库访问异常");
+        }else if (e instanceof GolabException){
+            return ResultEntity.fail("golab exception");
         }else {
             return ResultEntity.fail("服务器发生异常，请联系管理员");
         }

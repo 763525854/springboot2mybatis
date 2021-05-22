@@ -2,13 +2,18 @@ package com.rhyme.fsbp.service.shiro.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.rhyme.fsbp.entity.Role;
 import com.rhyme.fsbp.entity.User;
+import com.rhyme.fsbp.exception.GolabException;
 import com.rhyme.fsbp.mapper.UserMapper;
+import com.rhyme.fsbp.mapper.UserRoleMapper;
+import com.rhyme.fsbp.reqvo.UserAddRoleReqVo;
 import com.rhyme.fsbp.service.shiro.UserService;
 import com.rhyme.fsbp.util.MD5Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Set;
@@ -24,6 +29,8 @@ public class UserServiceImpl implements UserService {
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private UserRoleMapper userRoleMapper;
 
     /**
      * 创建用户
@@ -108,5 +115,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<String> findPermissions(String username) {
         return null;
+    }
+
+    /**
+     * 给用户添加角色
+     *
+     * @param reqVo
+     */
+    @Override
+    public int userAddRole(UserAddRoleReqVo reqVo) {
+        Wrapper<User> wrapper = new QueryWrapper<User>().eq("username", reqVo.getUsername());
+        User user = userMapper.selectOne(wrapper);
+        if (null == user) {
+            throw new GolabException("该用户不存在");
+        }
+        Wrapper<Role> roleWrapper = new QueryWrapper<Role>().eq("username", reqVo.getUsername()).eq("role_name", reqVo.getRoleName());
+        Role role = userRoleMapper.selectOne(roleWrapper);
+        if (null != role) {
+            throw new GolabException("该用户角色已存在");
+        }
+        Role roleEntity=new Role();
+        roleEntity.setRoleName(reqVo.getRoleName());
+        roleEntity.setUsername(reqVo.getUsername());
+        return userRoleMapper.insert(roleEntity);
     }
 }

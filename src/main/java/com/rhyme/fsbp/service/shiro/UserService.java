@@ -1,6 +1,7 @@
 package com.rhyme.fsbp.service.shiro;
 
 import com.rhyme.fsbp.entity.User;
+import com.rhyme.fsbp.reqvo.UserAddRoleReqVo;
 
 import java.util.Set;
 
@@ -66,4 +67,10 @@ public interface UserService {
      * @return
      */
     public Set<String> findPermissions(String username);
+
+    /**
+     * 给用户添加角色
+     * @param reqVo
+     */
+    public int userAddRole(UserAddRoleReqVo reqVo);
 }

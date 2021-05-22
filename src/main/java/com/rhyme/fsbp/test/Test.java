@@ -81,7 +81,7 @@ public class Test {
     }
 
     //对称加密
-    public static void main(String[] args) {
+    public static void main7(String[] args) {
         AesCipherService aesCipherService=new AesCipherService();
         aesCipherService.setKeySize(128);
         Key key=aesCipherService.generateNewKey();

@@ -1,7 +1,7 @@
 package com.rhyme.fsbp.timedtask;
 
 import com.rhyme.fsbp.model.TbUser;
-import com.rhyme.fsbp.service.UserService;
+import com.rhyme.fsbp.service.TbUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -11,7 +11,7 @@ import java.util.List;
 //@Component
 public class Task1 {
     @Autowired
-    private UserService userService;
+    private TbUserService userService;
     @Scheduled(fixedRate = 2000)
     public void fixedRate() {
         System.out.println("fixedRate>>>" + new Date());

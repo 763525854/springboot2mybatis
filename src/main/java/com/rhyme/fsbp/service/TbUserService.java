@@ -4,7 +4,7 @@ import com.rhyme.fsbp.model.TbUser;
 
 import java.util.List;
 
-public interface UserService {
+public interface TbUserService {
     List<TbUser> findAll();
     List<TbUser> selectAll();
     TbUser findOne(Long id);

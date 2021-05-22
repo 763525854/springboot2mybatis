@@ -1,10 +1,18 @@
 package com.rhyme.fsbp.service.shiro.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import com.rhyme.fsbp.entity.User;
+import com.rhyme.fsbp.mapper.UserMapper;
 import com.rhyme.fsbp.service.shiro.UserService;
 import com.rhyme.fsbp.util.MD5Utils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Set;
 
 /**
@@ -13,8 +21,12 @@ import java.util.Set;
  * @Description
  * @date 2021/5/22 17:50
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+    @Resource
+    private UserMapper userMapper;
+
     /**
      * 创建用户
      *
@@ -24,7 +36,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         user.setPassword(MD5Utils.encryptToString(user.getPassword()));
-        return null;
+        int i = userMapper.insert(user);
+        logger.info("创建用户:{}，并返回:{}", user, i);
+        Wrapper<User> wrapper = new QueryWrapper<User>().eq("username", user.getUsername());
+        return userMapper.selectOne(wrapper);
     }
 
     /**
@@ -35,7 +50,10 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public void changePassword(Long userId, String newPassword) {
-
+        User user = userMapper.selectById(userId);
+        user.setPassword(MD5Utils.encryptToString(newPassword));
+        int i = userMapper.updateById(user);
+        logger.info("更新:{}，并返回:{}", user, i);
     }
 
     /**

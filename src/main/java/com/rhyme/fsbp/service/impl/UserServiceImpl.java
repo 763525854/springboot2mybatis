@@ -3,7 +3,7 @@ package com.rhyme.fsbp.service.impl;
 import com.rhyme.fsbp.async.TestReceiver;
 import com.rhyme.fsbp.mapper.TbUserMapper;
 import com.rhyme.fsbp.model.TbUser;
-import com.rhyme.fsbp.service.UserService;
+import com.rhyme.fsbp.service.TbUserService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,8 +12,8 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
-@Service("userService")
-public class UserServiceImpl implements UserService {
+@Service("tbUserService")
+public class UserServiceImpl implements TbUserService {
     @Resource
     private TbUserMapper tbUserMapper;
     @Resource

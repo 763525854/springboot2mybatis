@@ -4,7 +4,7 @@ import com.rhyme.fsbp.model.TbUser;
 import com.rhyme.fsbp.myinterface.Apidempotent;
 import com.rhyme.fsbp.service.MyService;
 import com.rhyme.fsbp.service.TokenService;
-import com.rhyme.fsbp.service.UserService;
+import com.rhyme.fsbp.service.TbUserService;
 import io.swagger.annotations.*;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
@@ -33,7 +33,7 @@ public class HelloController {
     @Autowired
     private TokenService tokenService;
     @Autowired
-    UserService userService;
+    TbUserService userService;
     @Qualifier("myService1")
     @Autowired
     MyService myService;

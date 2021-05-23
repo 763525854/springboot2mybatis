@@ -21,7 +21,7 @@ public class LoginController {
         Subject subject= SecurityUtils.getSubject();
         subject.isAuthenticated();
         UsernamePasswordToken token=new UsernamePasswordToken(username,password);
-        token.setRememberMe(true);
+        token.setRememberMe(false);
         subject.login(token);
         try {
             subject.login(new UsernamePasswordToken(username,password));
@@ -30,6 +30,9 @@ public class LoginController {
             e.printStackTrace();
             System.out.println("登陆失败");
         }
+        System.out.println("执行到我了");
+        subject.logout();
+        System.out.println("已登出");
     }
 
     @GetMapping("/helloshiro")

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -103,7 +105,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Set<String> findRoles(String username) {
-        return null;
+        Wrapper<Role> roleWrapper = new QueryWrapper<Role>().eq("username", username);
+        List<Role> roles = userRoleMapper.selectList(roleWrapper);
+        Set<String> set = new HashSet<>();
+        for (Role role : roles) {
+            set.add(role.getRoleName());
+        }
+        return set;
     }
 
     /**
@@ -134,7 +142,7 @@ public class UserServiceImpl implements UserService {
         if (null != role) {
             throw new GolabException("该用户角色已存在");
         }
-        Role roleEntity=new Role();
+        Role roleEntity = new Role();
         roleEntity.setRoleName(reqVo.getRoleName());
         roleEntity.setUsername(reqVo.getUsername());
         return userRoleMapper.insert(roleEntity);

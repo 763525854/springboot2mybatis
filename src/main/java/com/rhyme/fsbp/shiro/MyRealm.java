@@ -1,6 +1,10 @@
 package com.rhyme.fsbp.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.rhyme.fsbp.entity.Role;
 import com.rhyme.fsbp.entity.User;
+import com.rhyme.fsbp.mapper.UserRoleMapper;
 import com.rhyme.fsbp.service.shiro.UserService;
 import com.rhyme.fsbp.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;
@@ -13,6 +17,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author rhyme
@@ -24,13 +31,22 @@ public class MyRealm extends AuthorizingRealm {
     Logger logger = LoggerFactory.getLogger(MyRealm.class);
     @Resource
     private UserService userService;
+    @Resource
+    private UserRoleMapper userRoleMapper;
 
     //授权
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         String principal = (String) principalCollection.getPrimaryPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+       /* Wrapper<Role> roleWrapper = new QueryWrapper<Role>().eq("username", principal);
+        List<Role> roles = userRoleMapper.selectList(roleWrapper);
+        Set<String> set = new HashSet<>();
+        for (Role role : roles) {
+            set.add(role.getRoleName());
+        }*/
         authorizationInfo.setRoles(userService.findRoles(principal));
+        //authorizationInfo.setRoles(set);
         authorizationInfo.setStringPermissions(userService.findPermissions(principal));
         return authorizationInfo;
     }

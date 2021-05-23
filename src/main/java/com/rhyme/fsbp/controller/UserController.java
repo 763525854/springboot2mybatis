@@ -22,14 +22,14 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequiresAuthentication
-//@RequiresRoles("rhyme")
+@RequiresRoles("admin")
 @RequestMapping("/shiroUser")
 public class UserController {
     Logger logger = LoggerFactory.getLogger(UserController.class);
     @Resource
     private UserService userService;
 
-    //@RequiresRoles("admin")
+    @RequiresRoles("hr")
     @PostMapping("/crateShiroUser")
     public User createShiroUser(@RequestBody User user) {
         logger.info("创建用户请求参数request{}", user);
